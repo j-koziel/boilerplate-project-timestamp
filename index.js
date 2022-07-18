@@ -24,10 +24,22 @@ app.get("/api/hello", function (req, res) {
   res.json({ greeting: "hello API" });
 });
 
-app.get("/api/:date?", function (req, res) {
-  const UTCdate = new Date(Number(req.params.date)).toDateString();
-  console.log(UTCdate);
-  res.json({ unix: req.params.date, utc: UTCdate });
+app.get("/api/:date?", (req, res, next) => {
+  const rightNow = Date();
+
+  if (!req.params.date) {
+    res.json({ unix: Date.now(), utc: rightNow });
+  } else {
+    return;
+  }
+
+  // const UTCdate = new Date(Number(req.params.date)).toDateString();
+  // // console.log(new Date(Date.now()));
+  // console.log(Date());
+  // console.log(UTCdate);
+  // res.json({ unix: req.params.date, utc: UTCdate });
+
+  // next();
 });
 
 // listen for requests :)
