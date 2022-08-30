@@ -28,18 +28,32 @@ const rightNow = () => {
   return new Date().toUTCString();
 };
 
+const utcDateString = (date) => {
+  return new Date(date).toUTCString();
+};
+
 app.get("/api/:date?", (req, res, next) => {
-  if (!req.params.date) {
-    res.json({ unix: Date.now(), utc: rightNow() });
-  } else {
-    return;
+  const dateParam = Number(req.params.date)
+    ? Number(req.params.date)
+    : req.params.date;
+  console.log(dateParam);
+  console.log(req.params.date);
+
+  console.log(utcDateString(dateParam));
+  if (!dateParam) {
+    res.status(200).json({ unix: Date.now(), utc: rightNow() });
   }
 
-  // const UTCdate = new Date(Number(req.params.date)).toDateString();
-  // // console.log(new Date(Date.now()));
-  // console.log(Date());
-  // console.log(UTCdate);
-  // res.json({ unix: req.params.date, utc: UTCdate });
+  if (new Date(dateParam).getTime() > 0) {
+    res.status(200).json({
+      unix: new Date(dateParam).getTime(),
+      utc: utcDateString(dateParam),
+    });
+  } else {
+    res.status(500).json({
+      error: "Invalid Date",
+    });
+  }
 
   next();
 });
