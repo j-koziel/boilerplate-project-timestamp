@@ -63,7 +63,6 @@ let port = process.env.PORT;
 if (port == null || port == "") {
   port = 8000;
 }
-app.listen(port);
 var listener = app.listen(port, function () {
   console.log("Your app is listening on port " + listener.address().port);
 });
