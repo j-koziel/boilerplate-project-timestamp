@@ -36,10 +36,7 @@ app.get("/api/:date?", (req, res, next) => {
   const dateParam = Number(req.params.date)
     ? Number(req.params.date)
     : req.params.date;
-  console.log(dateParam);
-  console.log(req.params.date);
 
-  console.log(utcDateString(dateParam));
   if (!dateParam) {
     res.status(200).json({ unix: Date.now(), utc: rightNow() });
   }
